@@ -20,6 +20,7 @@ class ActionSeeder extends Seeder
             ['title' => 'create'],
             ['title' => 'update'],
             ['title' => 'delete'],
+            ['title' => 'buy'],
             ['title' => 'all']
         ];
 

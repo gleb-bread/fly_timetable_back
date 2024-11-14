@@ -21,6 +21,13 @@ class PermissionsSeeder extends Seeder
             ['entity_id' => 1, 'action_id' => 3],
             ['entity_id' => 1, 'action_id' => 4],
             ['entity_id' => 1, 'action_id' => 5],
+            ['entity_id' => 1, 'action_id' => 6],
+            ['entity_id' => 2, 'action_id' => 2],
+            ['entity_id' => 2, 'action_id' => 2],
+            ['entity_id' => 2, 'action_id' => 3],
+            ['entity_id' => 2, 'action_id' => 4],
+            ['entity_id' => 2, 'action_id' => 5],
+            ['entity_id' => 2, 'action_id' => 6],
         ]);
     }
 }

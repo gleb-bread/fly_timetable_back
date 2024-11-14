@@ -14,13 +14,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            FlightTypeSeeder::class,
             FlightSeeder::class,
             UserSeeder::class,
             EntitySeeder::class,
             ActionSeeder::class,
             PermissionsSeeder::class,
-            ProjectSeeder::class
+            ProjectSeeder::class,
+            RolesTableSeeder::class,
+            RolePermissionTableSeeder::class,
+            UserAssigmentTableSeeder::class,
+            RoleUserAssigmentTableSeeder::class,
         ]);
     }
 }

@@ -18,6 +18,7 @@ class EntitySeeder extends Seeder
         $entities = [
             ['title' => 'all'],
             ['title' => 'flight'],
+            ['title' => 'right'],
         ];
 
         // Добавляем записи в таблицу entitys

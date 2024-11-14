@@ -18,6 +18,10 @@ class FlightSeeder extends Seeder
         // Инициализация Faker для генерации случайных данных
         $faker = Faker::create();
 
+        $FlightTypeSeeder = new FlightTypeSeeder();
+
+        $FlightTypeSeeder->run();
+
         // Генерация 100 записей для полетов
         for ($i = 0; $i < 100; $i++) {
             DB::table('flights')->insert([
