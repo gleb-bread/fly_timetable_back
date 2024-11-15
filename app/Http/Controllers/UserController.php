@@ -36,8 +36,6 @@ class UserController extends Controller
         }
 
         // Возвращаем данные пользователя
-        $this->responseService->createResponse(new ResponseData('',[
-            'user' => $user
-        ], 200));
+        return $this->responseService->createResponse(new ResponseData('', $user, 200));
     }
 }
