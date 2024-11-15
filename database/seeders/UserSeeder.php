@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'login' => 'admin',
                 'password' => Hash::make('01234456789'),  // Хешируем пароль перед сохранением
                 'name' => 'Admin',  // Имя пользователя
+                'email' => 'admin@admin.com',  // Email пользователя
                 'second_name' => 'Adminovich',  // Фамилия
             ],
         ];
