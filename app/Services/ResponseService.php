@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\JsonResponse;
+use App\DTO\ResponseData;
 
 class ResponseService
 {
@@ -14,15 +15,15 @@ class ResponseService
      * @param int $status HTTP статус код (по умолчанию 200)
      * @return JsonResponse
      */
-    public function createResponse(string $message = '', $data = null, int $status = 200): JsonResponse
+    public function createResponse(ResponseData $data): JsonResponse
     {
         // Стандартная структура ответа
         $response = [
-            'message' => $message,
-            'data' => $data,
+            'message' => $data->message,
+            'data' => $data->data,
         ];
 
         // Возвращаем JSON-ответ с указанным статусом
-        return response()->json($response, $status);
+        return response()->json($response, $data->status);
     }
 }

@@ -9,6 +9,8 @@ use App\Services\ResponseService;       // Импортируем сервис �
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\DTO\ResponseData;
+use App\Enums\ResponseMessage;
 
 class LoginController extends Controller
 {
@@ -41,7 +43,7 @@ class LoginController extends Controller
 
         // Если валидация не прошла
         if ($validator->fails()) {
-            return $this->responseService->createResponse($validator->errors(), 422);
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::VALIDATION_ERRORS, $validator->errors(), 422));
         }
 
         // Поиск пользователя по email
@@ -49,21 +51,21 @@ class LoginController extends Controller
 
         // Если пользователь не найден
         if (!$user) {
-            return $this->responseService->createResponse('The provided credentials are incorrect.', 401); // 401 Unauthorized
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::INVALID_USER_DATA, [], 401)); // 401 Unauthorized
         }
 
         // Проверка пароля
         if (!Hash::check($request->password, $user->password)) {
-            return $this->responseService->createResponse('The provided credentials are incorrect.', 401); // 401 Unauthorized
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::INVALID_USER_DATA, [], 401)); // 401 Unauthorized
         }
 
         // Создание токена для пользователя
         $token = $user->createToken('fly_timetable')->plainTextToken;
 
         // Ответ с успешной авторизацией и токеном
-        return $this->responseService->createResponse('User logged in successfully!', [
+        return $this->responseService->createResponse(new ResponseData(ResponseMessage::LOGIN_SUCCESS, [
             'user' => $user,
             'token' => $token,  // Отправляем токен клиенту
-        ], 200);
+        ], 200));
     }
 }

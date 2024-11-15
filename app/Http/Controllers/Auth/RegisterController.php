@@ -9,6 +9,8 @@ use App\Services\ResponseService;       // Импортируем сервис �
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\DTO\ResponseData;
+use App\Enums\ResponseMessage;
 
 class RegisterController extends Controller
 {
@@ -46,17 +48,17 @@ class RegisterController extends Controller
 
         // Если валидация не прошла
         if ($validator->fails()) {
-            return $this->responseService->createResponse($validator->errors(), 422);
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::VALIDATION_ERRORS,$validator->errors(), 422));
         }
 
         // Проверка уникальности логина
         if ($this->userValidationService->isLoginTaken($request->login)) {
-            return $this->responseService->createResponse('The login has already been taken.', 409); // 409 Conflict
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::LOGIN_TAKEN, [], 409)); // 409 Conflict
         }
 
         // Проверка уникальности email
         if ($this->userValidationService->isEmailTaken($request->email)) {
-            return $this->responseService->createResponse('The email has already been taken.', 409); // 409 Conflict
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::EMAIL_TAKEN, [], 409)); // 409 Conflict
         }
 
         // Создание нового пользователя
@@ -72,9 +74,9 @@ class RegisterController extends Controller
         $token = $user->createToken('fly_timetable')->plainTextToken;
 
         // Ответ с успешной регистрацией и токеном
-        return $this->responseService->createResponse('User registered successfully!', [
+        return $this->responseService->createResponse(new ResponseData(ResponseMessage::USER_REGISTERED, [
             'user' => $user,
             'token' => $token,  // Отправляем токен клиенту
-        ], 201);
+        ], 201));
     }
 }
