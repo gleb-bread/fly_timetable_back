@@ -51,12 +51,12 @@ class LoginController extends Controller
 
         // Если пользователь не найден
         if (!$user) {
-            return $this->responseService->createResponse(new ResponseData(ResponseMessage::INVALID_USER_DATA, [], 401)); // 401 Unauthorized
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::INVALID_USER_DATA, ['result' => 401], 401)); // 401 Unauthorized
         }
 
         // Проверка пароля
         if (!Hash::check($request->password, $user->password)) {
-            return $this->responseService->createResponse(new ResponseData(ResponseMessage::INVALID_USER_DATA, [], 401)); // 401 Unauthorized
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::INVALID_USER_DATA, ['result' => 401], 401)); // 401 Unauthorized
         }
 
         // Создание токена для пользователя

@@ -53,12 +53,12 @@ class RegisterController extends Controller
 
         // Проверка уникальности логина
         if ($this->userValidationService->isLoginTaken($request->login)) {
-            return $this->responseService->createResponse(new ResponseData(ResponseMessage::LOGIN_TAKEN, [], 409)); // 409 Conflict
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::LOGIN_TAKEN, ['login' => 409], 409)); // 409 Conflict
         }
 
         // Проверка уникальности email
         if ($this->userValidationService->isEmailTaken($request->email)) {
-            return $this->responseService->createResponse(new ResponseData(ResponseMessage::EMAIL_TAKEN, [], 409)); // 409 Conflict
+            return $this->responseService->createResponse(new ResponseData(ResponseMessage::EMAIL_TAKEN, ['email' => 409], 409)); // 409 Conflict
         }
 
         // Создание нового пользователя
