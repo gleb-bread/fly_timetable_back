@@ -12,4 +12,5 @@ enum ResponseMessage: string
     case INVALID_USER_DATA = 'The provided credentials are incorrect.';
     case LOGIN_SUCCESS = 'User logged in successfully.';
     case USER_UNAUTHORIZED = 'User not found or unauthorized.';
+    case NOT_FOUND = 'Not found';
 }
