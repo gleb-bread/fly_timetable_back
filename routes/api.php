@@ -19,4 +19,5 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::get('flightTypes', [FlightTypeController::class, 'getAll']);
     Route::get('flightTypes/{id}', [FlightTypeController::class, 'get']);
     Route::post('flightTypes', [FlightTypeController::class, 'create']);
+    Route::get('user/permissions', [UserController::class, 'getPermissions']);
 });

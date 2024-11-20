@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,7 +13,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     /**
-     * The attributes that are mass assignable.
+     * Атрибуты, которые можно массово заполнять.
      *
      * @var array<int, string>
      */
@@ -27,7 +26,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Атрибуты, скрытые при сериализации.
      *
      * @var array<int, string>
      */
@@ -36,7 +35,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Преобразование типов атрибутов.
      *
      * @return array<string, string>
      */
@@ -46,4 +45,29 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Связь пользователя с назначениями (UserAssignment).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function assignments()
+    {
+        return $this->hasMany(UserAssigment::class, 'user_id');
+    }
+
+    /**
+     * Связь пользователя с проектами через назначения.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function projects()
+    {
+        return $this->hasManyThrough(Project::class, UserAssigment::class, 'user_id', 'id', 'id', 'project_id');
+    }
+
+    public function roleUserAssigment(){
+        return $this->hasManyThrough(RoleUserAssigment::class, UserAssigment::class, 'user_id', 'user_assigment_id', 'id', 'id');
+    }
+
 }

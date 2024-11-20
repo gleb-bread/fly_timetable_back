@@ -5,16 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Flight;
 use Illuminate\Http\Request;
 use App\Services\ResponseService;
+use App\Services\UserPermissionsService;
 use App\DTO\ResponseData;
+use App\Enums\EntityActions;
+use App\Services\ErrorService;
 
 class FlightController extends Controller
 {
 
     protected $responseService;
+    protected $userPermissionsService;
+    private $_entity = 'flight';
 
-    public function __construct(ResponseService $responseService)
+    public function __construct(ResponseService $responseService, UserPermissionsService $userPermissionsService)
     {
         $this->responseService = $responseService;
+        $this->userPermissionsService = $userPermissionsService;
+        $this->userPermissionsService->main();
     }
     /**
      * Получение списка всех рейсов.
@@ -23,6 +30,8 @@ class FlightController extends Controller
      */
     public function get()
     {
+        $checkRights = $this->userPermissionsService->checkAction($this->_entity, EntityActions::GET);
+        if(!$checkRights) return ErrorService::NotPermission();
         $flights = Flight::all(); // Получение всех рейсов с типами полетов
         return $this->responseService->createResponse(new ResponseData('', $flights));
     }
