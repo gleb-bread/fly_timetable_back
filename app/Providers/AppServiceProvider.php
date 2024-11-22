@@ -7,6 +7,8 @@ use App\Services\UserValidationService;
 use App\Services\ResponseService;
 use App\Services\UserPermissionsService;
 use App\Services\ErrorService;
+use App\Models\User;
+use App\Observers\UserObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -37,6 +39,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        User::observe(UserObserver::class);
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\DTO\ResponseData;
 use App\Enums\ResponseMessage;
 
-class LoginController extends Controller
+class LoginController
 {
     protected $responseService;
 

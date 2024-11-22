@@ -34,4 +34,9 @@ class ProjectType extends Model
     {
         return $this->hasMany(Project::class);
     }
+
+    public static function getUserType()
+    {
+        return self::where('title', 'user')->first();
+    }
 }

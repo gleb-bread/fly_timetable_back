@@ -7,41 +7,36 @@ use Illuminate\Http\Request;
 use App\Services\ResponseService;
 use App\Enums\ResponseMessage;
 use App\DTO\ResponseData;
+use Illuminate\Http\JsonResponse;
+use App\Services\UserPermissionsService;
 
 class FlightTypeController extends Controller
 {
 
-    protected $responseService;
-
-    public function __construct(ResponseService $responseService)
+    public function __construct(ResponseService $responseService, UserPermissionsService $userPermissionsService)
     {
-        $this->responseService = $responseService;
+        parent::__construct('flightType', $responseService, $userPermissionsService);
     }
 
-    /**
-     * Получение сущности по ID.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAll()
+    public function handlerGetAll(Request $request): JsonResponse
     {
-        $flightType = FlightType::all();
+        $flightTypes = FlightType::all();
 
-        if (!$flightType) {
-            return $this->responseService->createResponse(new ResponseData(ResponseMessage::NOT_FOUND, ['title' => 404], 404));
-        }
+        return $this->responseService->createResponse(new ResponseData('', $flightTypes));
+    }
+
+    public function handlerCreate(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'type' => 'required|string|max:255',
+        ]);
+
+        $flightType = FlightType::create($validated);
 
         return $this->responseService->createResponse(new ResponseData('', $flightType));
     }
 
-    /**
-     * Получение сущности по ID.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get($id)
+    public function handlerGet(Request $request, int | null $id = null): JsonResponse
     {
         $flightType = FlightType::find($id);
 
@@ -51,21 +46,5 @@ class FlightTypeController extends Controller
 
         return $this->responseService->createResponse(new ResponseData('', $flightType));
     }
-
-    /**
-     * Добавление новой сущности.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function create(Request $request)
-    {
-        $validated = $request->validate([
-            'type' => 'required|string|max:255',
-        ]);
-
-        $flightType = FlightType::create($validated);
-
-        return response()->json($flightType, 201);
-    }
+    
 }

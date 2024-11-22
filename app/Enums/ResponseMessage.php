@@ -17,5 +17,6 @@ enum ResponseMessage: string
     case ENTITY_NOT_FOUND = 'Entity not found or unauthorized.';
     case ACTION_NOT_FOUND = 'Action not found or unauthorized.';
     case NOT_FOUND = 'Not found';
+    case METHOD_NOT_FOUND = 'Method not found';
     case NOT_PERMISSION = 'The user does not have permission to perform this action';
 }

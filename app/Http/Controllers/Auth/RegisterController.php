@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\UserValidationService;  // Импортируем сервис для валидации
 use App\Services\ResponseService;       // Импортируем сервис для формирования ответа
@@ -12,18 +11,12 @@ use Illuminate\Support\Facades\Validator;
 use App\DTO\ResponseData;
 use App\Enums\ResponseMessage;
 
-class RegisterController extends Controller
+class RegisterController
 {
-    protected $userValidationService;
-    protected $responseService;
+    protected UserValidationService $userValidationService;
+    protected ResponseService $responseService;
 
-    /**
-     * Конструктор контроллера.
-     *
-     * @param UserValidationService $userValidationService
-     * @param ResponseService $responseService
-     */
-    public function __construct(UserValidationService $userValidationService, ResponseService $responseService)
+    public function __construct(ResponseService $responseService, UserValidationService $userValidationService)
     {
         $this->userValidationService = $userValidationService;
         $this->responseService = $responseService;

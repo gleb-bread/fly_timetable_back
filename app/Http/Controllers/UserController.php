@@ -10,6 +10,7 @@ use App\Services\ResponseService;
 use App\DTO\ResponseData;
 use App\Enums\ResponseMessage;
 use App\Services\UserPermissionsService;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -23,37 +24,14 @@ class UserController extends Controller
         $this->permissionsService = $permissionsService;
     }
 
-    /**
-     * Получить данные текущего авторизованного пользователя.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getUserByToken()
+    public function handlerGet(Request $request, ?int $id = null): JsonResponse
     {
-        // Получаем текущего авторизованного пользователя
         $user = Auth::user();
 
-        // Проверяем, существует ли пользователь
         if (!$user) {
              $this->responseService->createResponse(new ResponseData(ResponseMessage::USER_UNAUTHORIZED, [], 401));
         }
 
-        // Возвращаем данные пользователя
         return $this->responseService->createResponse(new ResponseData('', $user, 200));
-    }
-
-    public function getPermissions(Request $request)
-    {
-        $token = $request->bearerToken();  // Получаем токен из заголовков запроса
-
-        if (!$token) {
-            return response()->json(['error' => 'Token is required'], 401);
-        }
-
-        // Получаем вложенный список сущностей с действиями
-        $this->permissionsService->main();
-        $entitiesWithActions = $this->permissionsService->getPermissions();
-
-        return response()->json($entitiesWithActions);
     }
 }

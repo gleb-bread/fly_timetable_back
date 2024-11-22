@@ -7,42 +7,22 @@ use Illuminate\Http\Request;
 use App\Services\ResponseService;
 use App\Services\UserPermissionsService;
 use App\DTO\ResponseData;
-use App\Enums\EntityActions;
-use App\Services\ErrorService;
+use Illuminate\Http\JsonResponse;
 
 class FlightController extends Controller
 {
-
-    protected $responseService;
-    protected $userPermissionsService;
-    private $_entity = 'flight';
-
     public function __construct(ResponseService $responseService, UserPermissionsService $userPermissionsService)
     {
-        $this->responseService = $responseService;
-        $this->userPermissionsService = $userPermissionsService;
-        $this->userPermissionsService->main();
+        parent::__construct('flight', $responseService, $userPermissionsService);
     }
-    /**
-     * Получение списка всех рейсов.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get()
+
+    public function handlerGetAll(Request $request): JsonResponse
     {
-        $checkRights = $this->userPermissionsService->checkAction($this->_entity, EntityActions::GET);
-        if(!$checkRights) return ErrorService::NotPermission();
-        $flights = Flight::all(); // Получение всех рейсов с типами полетов
+        $flights = Flight::all();
         return $this->responseService->createResponse(new ResponseData('', $flights));
     }
 
-    /**
-     * Создание нового рейса.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function create(Request $request)
+    public function handlerCreate(Request $request): JsonResponse
     {
         $validated = $request->validate([
             'flight_type_id' => 'required|exists:flight_types,id',

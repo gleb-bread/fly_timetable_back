@@ -18,6 +18,8 @@ class EntitySeeder extends Seeder
         $entities = [
             ['title' => 'all'],
             ['title' => 'flight'],
+            ['title' => 'flightType'],
+            ['title' => 'user'],
             ['title' => 'right'],
         ];
 

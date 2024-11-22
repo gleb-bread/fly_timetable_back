@@ -49,4 +49,9 @@ class Role extends Model
     public function rolePermissions(){
         return $this->hasMany(RolePermission::class);
     }
+
+    public static function getUserRole()
+    {
+        return self::where('title', 'user')->first();
+    }
 }
