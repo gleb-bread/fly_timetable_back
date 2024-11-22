@@ -19,8 +19,8 @@ class CreateFlightsTable extends Migration
             $table->string('departure_from'); // Поле "Откуда вылет"
             $table->string('destination'); // Поле "Куда вылет"
             $table->string('flight_number'); // Поле "Номер рейса"
-            $table->datetimes('departure_time'); // Поле "Во сколько вылет"
-            $table->datetimes('arrival_time'); // Поле "Во сколько прилет"
+            $table->dateTime('departure_time'); // Поле "Во сколько вылет"
+            $table->dateTime('arrival_time'); // Поле "Во сколько прилет"
             $table->timestamps(); // Поля "Дата создания" и "Дата обновления"
         });
     }

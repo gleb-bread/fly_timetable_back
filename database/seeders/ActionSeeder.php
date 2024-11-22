@@ -17,6 +17,7 @@ class ActionSeeder extends Seeder
         // Массив значений, которые будут добавлены в таблицу actions
         $actions = [
             ['title' => 'get'],
+            ['title' => 'getAll'],
             ['title' => 'create'],
             ['title' => 'update'],
             ['title' => 'delete'],

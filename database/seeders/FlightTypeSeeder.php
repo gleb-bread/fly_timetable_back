@@ -21,7 +21,16 @@ class FlightTypeSeeder extends Seeder
             ['type' => 'Гибридный'],
         ];
 
-        // Добавляем типы полетов в таблицу flight_types
-        DB::table('flight_types')->insert($flightTypes);
+        foreach ($flightTypes as $flightType) {
+            // Проверяем, существует ли запись с таким типом
+            $exists = DB::table('flight_types')
+                ->where('type', $flightType['type'])
+                ->exists();
+
+            if (!$exists) {
+                // Если запись не существует, добавляем её
+                DB::table('flight_types')->insert($flightType);
+            }
+        }
     }
 }

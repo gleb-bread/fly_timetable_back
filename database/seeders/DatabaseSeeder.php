@@ -14,16 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            FlightSeeder::class,
-            UserSeeder::class,
-            EntitySeeder::class,
-            ActionSeeder::class,
-            PermissionsSeeder::class,
-            ProjectSeeder::class,
-            RolesTableSeeder::class,
-            RolePermissionTableSeeder::class,
-            UserAssigmentTableSeeder::class,
             RoleUserAssigmentTableSeeder::class,
+            RolePermissionTableSeeder::class,
+            FlightSeeder::class
         ]);
     }
 }

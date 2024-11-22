@@ -20,7 +20,12 @@ class ProjectTypesSeeder extends Seeder
             ['title' => 'stuff'],
         ];
 
-        // Вставка значений в таблицу project_types
-        DB::table('project_types')->insert($projectTypes);
+        // Вставка значений только если их нет
+        foreach ($projectTypes as $type) {
+            DB::table('project_types')->updateOrInsert(
+                ['title' => $type['title']], // Условие уникальности
+                $type                        // Данные для вставки/обновления
+            );
+        }
     }
 }

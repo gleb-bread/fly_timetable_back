@@ -21,6 +21,12 @@ class EntitySeeder extends Seeder
             ['title' => 'flightType'],
             ['title' => 'user'],
             ['title' => 'right'],
+            ['title' => 'action'],
+            ['title' => 'entity'],
+            ['title' => 'permission'],
+            ['title' => 'project'],
+            ['title' => 'projectType'],
+            ['title' => 'role'],
         ];
 
         // Добавляем записи в таблицу entitys
