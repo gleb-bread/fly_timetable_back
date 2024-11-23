@@ -10,15 +10,16 @@ use App\Services\ErrorService;
 use Illuminate\Http\Request;
 use App\DTO\ResponseData;
 use App\Enums\ResponseMessage;
+use App\Enums\Entity;
 
 abstract class Controller
 {
-    private string $_entity;
+    private Entity $_entity;
     protected UserPermissionsService $userPermissionsService;
     protected ResponseService $responseService;
  
 
-    public function __construct(string $entity, ResponseService $responseService, UserPermissionsService $userPermissionsService)
+    public function __construct(Entity $entity, ResponseService $responseService, UserPermissionsService $userPermissionsService)
     {
         $this->userPermissionsService = $userPermissionsService;
         $this->responseService = $responseService;

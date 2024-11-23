@@ -2,10 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Models\Role;
-use App\Models\Permission;
-use App\Models\UserAssigment;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RoleUserAssigment;
 use App\Services\ErrorService;
@@ -13,7 +9,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use App\Enums\EntityActions;
 use App\Models\Entity;
 use App\Models\Action;
-use Illuminate\Support\Collection;
+use App\Enums\Entity as EntityEnum;
 use Illuminate\Http\JsonResponse;
 
 class UserPermissionsService
@@ -37,7 +33,7 @@ class UserPermissionsService
         return $this;
     }
 
-    public function checkAction(string $entity, EntityActions $action){
+    public function checkAction(EntityEnum $entity, EntityActions $action){
         $permissions = collect($this->getPermissions());
 
         if($this->checkAdmin($permissions)) return true;
@@ -102,7 +98,7 @@ class UserPermissionsService
         return $entities->first(); // Возвращаем первый объект из коллекции
     }
 
-    private function getEntity(string $entity): Entity|JsonResponse {
+    private function getEntity(EntityEnum $entity): Entity|JsonResponse {
         $entities = Entity::where('title', $entity)->get(); 
         if ($entities->isEmpty()) {
             return ErrorService::EntityNotFound(); // Предположим, что ErrorService возвращает JsonResponse

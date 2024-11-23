@@ -9,13 +9,14 @@ use App\Enums\ResponseMessage;
 use App\DTO\ResponseData;
 use Illuminate\Http\JsonResponse;
 use App\Services\UserPermissionsService;
+use App\Enums\Entity;
 
 class FlightTypeController extends Controller
 {
 
     public function __construct(ResponseService $responseService, UserPermissionsService $userPermissionsService)
     {
-        parent::__construct('flightType', $responseService, $userPermissionsService);
+        parent::__construct(Entity::FLIGHT_TYPE, $responseService, $userPermissionsService);
     }
 
     public function handlerGetAll(Request $request): JsonResponse
