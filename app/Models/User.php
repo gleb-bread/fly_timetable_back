@@ -70,4 +70,14 @@ class User extends Authenticatable
         return $this->hasManyThrough(RoleUserAssigment::class, UserAssigment::class, 'user_id', 'user_assigment_id', 'id', 'id');
     }
 
+    /**
+     * Связь пользователя с корзиной (Cart).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function carts()
+    {
+        return $this->hasMany(Cart::class, 'user_id');
+    }
+
 }

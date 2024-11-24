@@ -28,6 +28,7 @@ class FlightSeeder extends Seeder
                 'flight_type_id' => rand(1, 3), // Ссылка на случайный тип полета (1, 2 или 3)
                 'departure_from' => $faker->city,
                 'destination' => $faker->city,
+                'price' => $faker->randomNumber(5, false),
                 'flight_number' => $faker->unique()->bothify('??###'),
                 'departure_time' => $faker->dateTimeThisYear()->format('Y-m-d'),
                 'arrival_time' => $faker->dateTimeThisYear()->format('Y-m-d'),

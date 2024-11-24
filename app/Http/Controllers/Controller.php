@@ -48,13 +48,6 @@ abstract class Controller
         return $this->handlerCreate($request);
     }
 
-    public function buy(Request $request){
-        $checkRights = $this->userPermissionsService->checkAction($this->_entity, EntityActions::BUY);
-        if(!$checkRights) return ErrorService::NotPermission();
-        
-        return $this->handlerBuy($request);
-    }
-
     public function delete(Request $request){
         $checkRights = $this->userPermissionsService->checkAction($this->_entity, EntityActions::DELETE);
         if(!$checkRights) return ErrorService::NotPermission();
@@ -70,10 +63,6 @@ abstract class Controller
     }
 
     public function handlerCreate(Request $request): JsonResponse{
-        return $this->responseService->createResponse(new ResponseData(ResponseMessage::METHOD_NOT_FOUND, [], 404));
-    }
-
-    public function handlerBuy(Request $request): JsonResponse{
         return $this->responseService->createResponse(new ResponseData(ResponseMessage::METHOD_NOT_FOUND, [], 404));
     }
 

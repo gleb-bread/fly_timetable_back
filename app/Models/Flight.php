@@ -25,4 +25,14 @@ class Flight extends Model
     {
         return $this->belongsTo(FlightType::class);
     }
+
+    /**
+     * Связь с корзинами (Cart).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cart()
+    {
+        return $this->hasMany(Cart::class, 'flight_id');
+    }
 }

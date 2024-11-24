@@ -15,4 +15,7 @@ enum Entity: string
     case PROJECT = 'project';
     case PROJECT_TYPE = 'projectType';
     case ROLE = 'role';
+    case CART = 'cart';
+    case APPLICATION = 'application';
+    case ANALYTIC = 'analytic';
 }

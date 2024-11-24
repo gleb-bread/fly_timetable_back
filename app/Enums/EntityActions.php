@@ -9,6 +9,5 @@ enum EntityActions: string
     case GET_ALL = 'getAll';
     case UPDATE = 'update';
     case DELETE = 'delete';
-    case BUY = 'buy';
     case CREATE = 'create';
 }

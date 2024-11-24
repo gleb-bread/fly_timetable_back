@@ -21,6 +21,7 @@ class CreateFlightsTable extends Migration
             $table->string('flight_number'); // Поле "Номер рейса"
             $table->dateTime('departure_time'); // Поле "Во сколько вылет"
             $table->dateTime('arrival_time'); // Поле "Во сколько прилет"
+            $table->integer('price'); // Поле "Цена" целочисленное
             $table->timestamps(); // Поля "Дата создания" и "Дата обновления"
         });
     }

@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use App\Enums\Entity;
+use Illuminate\Support\Facades\Auth;
 
 class FlightController extends Controller
 {
@@ -21,6 +22,9 @@ class FlightController extends Controller
 
     public function handlerGetAll(Request $request): JsonResponse
 {
+
+    $userId = Auth::user()->id ?? 0;
+
     $flights = QueryBuilder::for(Flight::class)
         ->allowedFilters([
             // Фильтрация по времени отправления
@@ -37,6 +41,9 @@ class FlightController extends Controller
             }),
         ])
         ->limit(100)
+        ->with(['cart' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }])
         ->get();
 
     return $this->responseService->createResponse(new ResponseData('', $flights));
