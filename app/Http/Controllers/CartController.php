@@ -10,6 +10,7 @@ use App\Services\UserPermissionsService;
 use App\Enums\Entity;
 use App\DTO\ResponseData;
 use App\Enums\ResponseMessage;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -23,11 +24,15 @@ class CartController extends Controller
      */
     public function handlerCreate(Request $request): JsonResponse
     {
+
+        $userId = $this->_user->id;
+
         $validated = $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
             'flight_id' => 'required|integer|exists:flights,id',
             'count' => 'required|integer|min:1',
         ]);
+
+        $validated['user_id'] = $userId;
 
         $cart = Cart::create($validated);
 
@@ -92,7 +97,7 @@ class CartController extends Controller
 
         if (!$cart) {
             return $this->responseService->createResponse(
-                new ResponseData(ResponseMessage::NOT_FOUND, [], 404)
+                new ResponseData(ResponseMessage::NOT_FOUND, ['result' => 404], 404)
             );
         }
 
@@ -108,11 +113,9 @@ class CartController extends Controller
      */
     public function handlerGetAll(Request $request): JsonResponse
     {
-        $validated = $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
-        ]);
+        $userId = $this->_user->id;
 
-        $carts = Cart::where('user_id', $validated['user_id'])->get();
+        $carts = Cart::where('user_id', $userId)->get();
 
         return $this->responseService->createResponse(
             new ResponseData('', $carts)

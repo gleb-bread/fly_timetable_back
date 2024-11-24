@@ -11,10 +11,13 @@ use Illuminate\Http\Request;
 use App\DTO\ResponseData;
 use App\Enums\ResponseMessage;
 use App\Enums\Entity;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 abstract class Controller
 {
     private Entity $_entity;
+    protected User $_user;
     protected UserPermissionsService $userPermissionsService;
     protected ResponseService $responseService;
  
@@ -25,6 +28,7 @@ abstract class Controller
         $this->responseService = $responseService;
         $this->_entity = $entity;
         $this->userPermissionsService->main();
+        $this->_user = Auth::user();
     }
 
     public function get(Request $request): JsonResponse{
