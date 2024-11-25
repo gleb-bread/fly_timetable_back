@@ -46,7 +46,7 @@ class CartController extends Controller
      */
     public function handlerGet(Request $request, int $id = null): JsonResponse
     {
-        $cart = Cart::find($id);
+        $cart = Cart::with('flight')->find($id);
 
         if (!$cart) {
             return $this->responseService->createResponse(
@@ -115,7 +115,7 @@ class CartController extends Controller
     {
         $userId = $this->_user->id;
 
-        $carts = Cart::where('user_id', $userId)->get();
+        $carts = Cart::where('user_id', $userId)->with('flight')->get();
 
         return $this->responseService->createResponse(
             new ResponseData('', $carts)
