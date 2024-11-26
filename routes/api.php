@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
@@ -8,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\FlightTypeController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ApplicationController;
+
 
 Route::post('register', [RegisterController::class, 'register']);
 
@@ -28,4 +29,9 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::post('cart', [CartController::class, 'create']);
     Route::delete('cart', [CartController::class, 'delete']);
     Route::patch('cart', [CartController::class, 'update']);
+
+    Route::post('applications', [ApplicationController::class, 'handlerCreate']);
+    Route::get('applications', [ApplicationController::class, 'handlerGetAll']);
+    Route::get('applications/{id}', [ApplicationController::class, 'handlerGet']);
+    Route::patch('applications', [ApplicationController::class, 'handlerUpdate']);
 });

@@ -18,7 +18,11 @@ class CreateApplicationsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Внешний ключ на таблицу users
             $table->foreignId('flight_id')->constrained('flights')->onDelete('cascade'); // Внешний ключ на таблицу flights
             $table->integer('count'); // Количество
+            $table->unsignedBigInteger('order_id'); // Идентификатор заказа
             $table->timestamps(); // Дата создания и обновления
+
+            // Индексы
+            $table->index('order_id'); // Индекс для быстрого поиска по заказу
         });
     }
 
