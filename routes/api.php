@@ -8,6 +8,9 @@ use App\Http\Controllers\FlightController;
 use App\Http\Controllers\FlightTypeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Analytic\revenue\AnalyticRevenueDayController;
+use App\Http\Controllers\Analytic\revenue\AnalyticRevenueMounthController;
+use App\Http\Controllers\Analytic\revenue\AnalyticRevenueYearController;
 
 
 Route::post('register', [RegisterController::class, 'register']);
@@ -34,4 +37,8 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::get('applications', [ApplicationController::class, 'handlerGetAll']);
     Route::get('applications/{id}', [ApplicationController::class, 'handlerGet']);
     Route::patch('applications', [ApplicationController::class, 'handlerUpdate']);
+
+    Route::get('analytics/revenue/day', [AnalyticRevenueDayController::class, 'getAll']);
+    Route::get('analytics/revenue/month', [AnalyticRevenueMounthController::class, 'getAll']);
+    Route::get('analytics/revenue/year', [AnalyticRevenueYearController::class, 'getAll']);
 });

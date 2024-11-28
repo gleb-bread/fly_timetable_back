@@ -61,19 +61,28 @@ class ApplicationController extends Controller
         // Удаляем записи из таблицы Cart
         Cart::where('user_id', $userId)->delete();
 
+        // Получаем все заявки текущего пользователя с подгруженными сущностями flight
+        $applications = Application::with('flight')
+            ->where('user_id', $userId)
+            ->where('order_id', $orderId)
+            ->get();
+
         return $this->responseService->createResponse(
-            new ResponseData('', ['order_id' => $orderId])
+            new ResponseData('', $applications)
         );
     }
 
     /**
-     * Получение всех заявок.
+     * Получение всех заявок, сгруппированных по order_id, включая сущность flight.
      */
     public function handlerGetAll(Request $request): JsonResponse
     {
         $userId = Auth::id();
 
-        $applications = Application::where('user_id', $userId)->get();
+        // Получаем все заявки текущего пользователя с подгруженными сущностями flight
+        $applications = Application::with('flight')
+            ->where('user_id', $userId)
+            ->get();
 
         if ($applications->isEmpty()) {
             return $this->responseService->createResponse(
@@ -81,10 +90,15 @@ class ApplicationController extends Controller
             );
         }
 
+        // Группируем записи по полю order_id
+        $groupedApplications = $applications->groupBy('order_id');
+
         return $this->responseService->createResponse(
-            new ResponseData('', $applications->toArray())
+            new ResponseData('', $groupedApplications->toArray())
         );
     }
+
+
 
     /**
      * Получение одной заявки.
