@@ -33,6 +33,10 @@ class UserPermissionsService
         return $this;
     }
 
+    public function getAll(){
+        return $permissions = collect($this->getPermissions());
+    }
+
     public function checkAction(EntityEnum $entity, EntityActions $action){
         $permissions = collect($this->getPermissions());
 

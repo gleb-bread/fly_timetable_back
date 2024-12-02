@@ -11,6 +11,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Analytic\revenue\AnalyticRevenueDayController;
 use App\Http\Controllers\Analytic\revenue\AnalyticRevenueMounthController;
 use App\Http\Controllers\Analytic\revenue\AnalyticRevenueYearController;
+use App\Http\Controllers\PermissionController;
 
 
 Route::post('register', [RegisterController::class, 'register']);
@@ -41,4 +42,6 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::get('analytics/revenue/day', [AnalyticRevenueDayController::class, 'getAll']);
     Route::get('analytics/revenue/month', [AnalyticRevenueMounthController::class, 'getAll']);
     Route::get('analytics/revenue/year', [AnalyticRevenueYearController::class, 'getAll']);
+
+    Route::get('permissions', [PermissionController::class, 'getAll']);
 });
