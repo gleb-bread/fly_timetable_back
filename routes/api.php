@@ -3,7 +3,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\FlightController;
 use App\Http\Controllers\FlightTypeController;
 use App\Http\Controllers\CartController;
@@ -12,6 +12,8 @@ use App\Http\Controllers\Analytic\revenue\AnalyticRevenueDayController;
 use App\Http\Controllers\Analytic\revenue\AnalyticRevenueMounthController;
 use App\Http\Controllers\Analytic\revenue\AnalyticRevenueYearController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\User\UserPermissionController;
+use App\Http\Controllers\User\UserIsStuffController;
 
 
 Route::post('register', [RegisterController::class, 'register']);
@@ -20,6 +22,8 @@ Route::post('login', [LoginController::class, 'login']);
 
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::get('user', [UserController::class, 'get']);
+    Route::get('user/permissions', [UserPermissionController::class, 'get']);
+    Route::get('user/isStuff', [UserIsStuffController::class, 'get']);
 
     Route::get('flights', [FlightController::class, 'getAll']);
     Route::post('flights', [FlightController::class, 'create']);
