@@ -28,6 +28,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::get('flights', [FlightController::class, 'getAll']);
     Route::post('flights', [FlightController::class, 'create']);
     Route::patch('flights', [FlightController::class, 'update']);
+    Route::delete('flights', [FlightController::class, 'delete']);
 
     Route::get('flightTypes', [FlightTypeController::class, 'getAll']);
     Route::get('flightTypes/{id}', [FlightTypeController::class, 'get']);

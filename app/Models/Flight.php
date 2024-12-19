@@ -16,6 +16,7 @@ class Flight extends Model
         'flight_number',
         'departure_time',
         'arrival_time',
+        'price'
     ];
 
     /**

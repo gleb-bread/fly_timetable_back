@@ -58,6 +58,7 @@ class FlightController extends Controller
             'flight_number' => 'required|string|max:50',
             'departure_time' => 'required|date',
             'arrival_time' => 'required|date|after:departure_time',
+            'price' => 'required|integer',
         ]);
 
         $flight = Flight::create($validated);
@@ -69,12 +70,14 @@ class FlightController extends Controller
     {
         // Валидация входящих данных
         $validated = $request->validate([
+            'id' => 'required|integer',
             'flight_type_id' => 'sometimes|exists:flight_types,id', // Необязательное поле, но должно существовать
             'departure_from' => 'sometimes|string|max:255', // Поле вылета
             'destination' => 'sometimes|string|max:255', // Поле назначения
             'flight_number' => 'sometimes|string|max:50', // Номер рейса
             'departure_time' => 'sometimes|date', // Дата вылета
             'arrival_time' => 'sometimes|date|after:departure_time', // Дата прибытия (должна быть позже вылета)
+            'price' => 'required|integer',
         ]);
 
         // Поиск модели Flight
@@ -85,6 +88,23 @@ class FlightController extends Controller
 
         // Возврат ответа
         return $this->responseService->createResponse(new ResponseData('', $flight));
+    }
+
+    public function handlerDelete(Request $request): JsonResponse
+    {
+        // Validate the incoming request to ensure 'id' is present and is an integer
+        $validated = $request->validate([
+            'id' => 'required|integer|exists:flights,id',
+        ]);
+
+        // Retrieve the flight by ID
+        $flight = Flight::findOrFail($validated['id']);
+
+        // Delete the flight
+        $flight->delete();
+
+        // Return a success response
+        return $this->responseService->createResponse(new ResponseData('Flight deleted successfully.', true));
     }
 
 }
